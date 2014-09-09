@@ -37,7 +37,7 @@ typedef struct DataNode
  * Function    : AddCmd
  * Description : Add new cmd node to cmd list 
  * Input       : 'head' is cmd list's head point address
- *				 'cmd' and 'desc' are the related command and description
+ *               'cmd' and 'desc' are the related command and description
  * Output      : Wether succuss or fail both retun NULL
  */
 void AddCmd(tDataNode **head, char *cmd, char *desc)
@@ -61,7 +61,7 @@ void AddCmd(tDataNode **head, char *cmd, char *desc)
  * Function    : GetDataNode
  * Description : Get cmd list node according to 'cmd'
  * Input       : 'head' is cmd list's head point address
- *				 'cmd' is the related command
+ *               'cmd' is the related command
  * Output      : If succuss return node address else retun NULL
  */
 tDataNode *GetDataNode(tDataNode *head, char *cmd)
