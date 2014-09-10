@@ -49,8 +49,8 @@ void AddCmd(tDataNode **head, char *cmd, char *desc)
 	{
 		return;
 	}
-	snprintf(p->cmd, CMD_LEN, cmd);
-	snprintf(p->desc, DESC_LEN, desc);
+	snprintf(p->cmd, CMD_LEN, "%s", cmd);
+	snprintf(p->desc, DESC_LEN, "%s", desc);
 	p->next = *head;
 	*head = p;
 
@@ -67,6 +67,7 @@ void AddCmd(tDataNode **head, char *cmd, char *desc)
 tDataNode *GetDataNode(tDataNode *head, char *cmd)
 {
 	tDataNode *p = head;
+    cmd[strlen(cmd)-1] = 0;
 
 	while(p != NULL)
 	{
@@ -88,10 +89,10 @@ main()
 
 	/* Init cmd list */
 	AddCmd(&head, "ls", "List information about the FILEs.");
-	AddCmd(&head, "cp", "Copy SOURCE to DEST, or multiple SOURCE(s) to DIRECTORY.")
-	AddCmd(&head, "ps", "Report a snapshot of the current processes.")
-	AddCmd(&head, "mv", "Move (rename) files.")
-	AddCmd(&head, "rm", "Remove files or directories.")
+	AddCmd(&head, "cp", "Copy SOURCE to DEST, or multiple SOURCE(s) to DIRECTORY.");
+	AddCmd(&head, "ps", "Report a snapshot of the current processes.");
+	AddCmd(&head, "mv", "Move (rename) files.");
+	AddCmd(&head, "rm", "Remove files or directories.");
 	
 	printf("Menu list:\n");
 	p = head;
