@@ -89,12 +89,12 @@ void main()
     char cmd[CMD_LEN];
 
     /* Init cmd list */
+    AddCmd(&head, "quit", "Quit this program.");
     AddCmd(&head, "ls", "List information about the FILEs.");
     AddCmd(&head, "cp", "Copy SOURCE to DEST, or multiple SOURCE(s) to DIRECTORY.");
     AddCmd(&head, "ps", "Report a snapshot of the current processes.");
     AddCmd(&head, "mv", "Move (rename) files.");
     AddCmd(&head, "rm", "Remove files or directories.");
-    AddCmd(&head, "quit", "Quit this program.");
 
     printf("Menu list:\n");
     p = head;
