@@ -20,14 +20,64 @@
 
 #include<stdio.h>
 #include<stdlib.h>
-#include"linklist.h"
+#include<string.h>
 
 #define CMD_MAX_LEN		128
 #define DESC_LEN	    1024
 
+typedef struct DataNode
+{
+
+    char* cmd;
+    char* desc;
+    int (*handler)();
+    struct DataNode *next;
+} tDataNode;
+
 int Help();
 
-/* Menu program */
+/* 
+ * Function    : GetDataNode
+ * Description : Get cmd list node according to 'cmd'
+ * Input       : 'head' is cmd list's head point address
+ *               'cmd' is the related command
+ * Output      : If succuss return node address else retun NULL
+ */
+tDataNode *GetDataNode(tDataNode *head, char *cmd)
+{
+    tDataNode *p = head;
+    /* Remove '/n' in the tail of cmd */
+    cmd[strlen(cmd)-1] = 0;
+    
+    if(p == NULL || cmd == NULL)
+    {
+        return NULL;
+    }
+    while(p != NULL)
+    {
+        if (strcmp(p->cmd, cmd) == 0)
+        {
+            return p;
+        }
+        p = p->next;
+    }
+
+    return NULL;
+}
+
+int ShowAllCmd(tDataNode *head)
+{
+    tDataNode *p = head;
+
+    printf("Menu list:\n");
+    while(p != NULL)
+    {
+        printf("%s - %s\n", p->cmd, p->desc);
+        p = p->next;
+    }
+
+    return 0;
+}
 
 static tDataNode head[] = 
 {
@@ -35,6 +85,7 @@ static tDataNode head[] =
     {"ls", "List information about the FILEs", NULL, NULL}
 };
 
+/* Menu program */
 void main()
 {
     tDataNode *p = NULL;
@@ -56,12 +107,13 @@ void main()
             printf("This is a wrong cmd name!\n");
             continue;
         }
+
+        printf("%s - %s\n", p->cmd, p->desc);
         if (p->handler != NULL)
         {
             p->handler();
             continue;
         }
-        printf("%s - %s\n", p->cmd, p->desc);
     }
 }
 
