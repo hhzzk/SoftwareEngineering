@@ -22,8 +22,8 @@
 #include<stdlib.h>
 #include<string.h>
 
-#define CMD_MAX_LEN		128
-#define DESC_LEN	    1024
+#define CMD_MAX_LEN     128
+#define DESC_LEN        1024
 
 typedef struct DataNode
 {
