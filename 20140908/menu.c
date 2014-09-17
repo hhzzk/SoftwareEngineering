@@ -85,7 +85,7 @@ static tDataNode head[] =
 };
 
 /* Menu program */
-void main()
+main()
 {
     tDataNode *p = NULL;
     char cmd[CMD_MAX_LEN];
