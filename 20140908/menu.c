@@ -1,5 +1,5 @@
 /**************************************************************************************************/
-/* Copyright (C) mc2lab.com, SSE@USTC, 2014-2015                                                  */
+/* Copyright (C) wangjinrui, SSE@USTC, 2014-2015                                                  */
 /*                                                                                                */
 /* FILE NAME             :  menu.c                                                                */
 /* PRINCIPAL AUTHOR      :  Wangjinrui                                                            */
