@@ -22,8 +22,18 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+#include "linktable.h"
 #include "menu.h"
 
+/* data struct and its operations */
+
+typedef struct DataNode
+{
+    tLinkTableNode * pNext;
+    char*   cmd;
+    char*   desc;
+    int     (*handler)();
+} tDataNode;
 
 tLinkTable *head = NULL; 
 
@@ -47,8 +57,28 @@ tDataNode* FindCmd(char * cmd)
     return NULL;
 }
 
+/* Check whether cmd existed */
+int CheckCmdExist(char * cmd)
+{
+    if(head == NULL || cmd == NULL)
+    {
+        return FAILURE;
+    }
+
+    tDataNode * pNode = (tDataNode*)GetLinkTableHead(head);
+    while(pNode != NULL)
+    {
+        if(!strcmp(pNode->cmd, cmd))
+        {
+            return  SUCCESS;  
+        }
+        pNode = (tDataNode*)GetNextLinkTableNode(head,(tLinkTableNode *)pNode);
+    }
+    return FAILURE;
+}
+
 /* Add cmd to linklist */
-int AddCmd(char *cmd, char *desc,  int handler())
+int AddCmd(char *cmd, char *desc,  int handler(char *))
 {
     /* Check arguments */
     if(head == NULL)
@@ -60,7 +90,7 @@ int AddCmd(char *cmd, char *desc,  int handler())
         return FAILURE; 
     }
     /* Check if the cmd is existence */
-    if(FindCmd(cmd) != NULL)
+    if(CheckCmdExist(cmd) == SUCCESS)
     {
         return FAILURE;
     }
@@ -92,18 +122,6 @@ int DelCmd(char *cmd)
     return DelLinkTableNode(head, (tLinkTableNode *)pNode);
 }
 
-/* Show all cmd in listlist */
-int ShowAllCmd()
-{
-    tDataNode * pNode = (tDataNode*)GetLinkTableHead(head);
-    while(pNode != NULL)
-    {
-        printf("%s - %s\n", pNode->cmd, pNode->desc);
-        pNode = (tDataNode*)GetNextLinkTableNode(head,(tLinkTableNode *)pNode);
-    }
-    return 0;
-}
-
 /* Get cmd handler function */
 PF GetHandlerFunc(char *cmd)
 {
@@ -122,4 +140,24 @@ PF GetHandlerFunc(char *cmd)
     }
     
     return pNode->handler;
+}
+
+/* Get cmd description */
+char* GetDesc(char *cmd)
+{
+    tDataNode *pNode = NULL;
+    
+    if(head == NULL || cmd == NULL)
+    {
+        return NULL;
+    }
+    
+    pNode = FindCmd(cmd);
+    /* Check if the cmd is existence */
+    if(pNode == NULL)
+    {
+        return NULL;
+    }
+    
+    return pNode->desc;
 }

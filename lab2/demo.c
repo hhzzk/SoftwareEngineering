@@ -24,11 +24,13 @@
 
 #include"menu.h"
 
-#define CMD_MAX_LEN  128
-#define DESC_LEN     1024
+#define CMD_NUM 3
 
-int Help();
-int Exit();
+int Help(char*);
+int Exit(char*);
+int Ls(char*);
+
+char cmds[CMD_NUM][CMD_MAX_LEN] = {"help","ls", "exit"};
 
 /* Demo program */
 main()
@@ -36,6 +38,7 @@ main()
     char cmd[CMD_MAX_LEN];
     
     AddCmd("help", "This is help cmd", &Help);
+    AddCmd("ls", "display dir", &Ls);
     AddCmd("exit", "This is exit cmd", &Exit);
 
     /* Get cmd from stdin, print related description */
@@ -57,17 +60,27 @@ main()
             printf("Error command!\n");
             continue;
         }
-        handler();
+        handler(NULL);
     }
 }
 
-int Help()
+int Help(char* argv)
 {
-    ShowAllCmd();
+    int i = 0;
+    for(i = 0;i < CMD_NUM;i++)
+    {
+        printf("%s - %s\n", cmds[i], GetDesc(cmds[i]));
+    }
     return 0;
 }
 
-int Exit()
+int Ls(char* argv)
+{
+    system("ls");
+    return 0;
+}
+
+int Exit(char* argv)
 {
     DelCmd("help");
     DelCmd("exit");

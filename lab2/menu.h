@@ -1,4 +1,3 @@
-
 /**************************************************************************************************/
 /* Copyright (C) wangjinrui, SSE@USTC, 2014-2015                                                  */
 /*                                                                                                */
@@ -22,37 +21,25 @@
 #ifndef _MENU_H_
 #define _MENU_H_
 
-#include "linktable.h"
-
 #define CMD_MAX_LEN 128
 #define DESC_LEN    1024
 
-/* data struct and its operations */
-
-typedef struct DataNode
-{
-    tLinkTableNode * pNext;
-    char*   cmd;
-    char*   desc;
-    int     (*handler)();
-} tDataNode;
-
 /* Declare point of function */
-typedef int (*PF)();
-
-/* Find a cmd in the linklist and return the datanode pointer */
-tDataNode* FindCmd(char * cmd);
+typedef int (*PF)(char *);
 
 /* Add cmd to linklist */
-int AddCmd(char *cmd, char *desc,  int handler());
+int AddCmd(char *cmd, char *desc,  int handler(char *));
 
 /* Delete Cmd from linklist */
 int DelCmd(char *cmd);
 
-/* Show all cmd in listlist */
-int ShowAllCmd();
+/* Check whether cmd existed */
+int CheckCmdExist(char * cmd);
 
-/* Get cmd handler function */
+/* Get cmd handler function, you should write handler function to exe your cmd */
 PF GetHandlerFunc(char *cmd);
+
+/* Get cmd description*/
+char* GetDesc(char *cmd);
 
 #endif /* _MENU_H_ */
